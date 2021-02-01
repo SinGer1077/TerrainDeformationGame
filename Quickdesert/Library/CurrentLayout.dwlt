@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 498}
   m_MaxSize: {x: 14004, y: 14048}
   vertical: 0
-  controlID: 81
+  controlID: 32
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 498}
   m_MaxSize: {x: 10002, y: 14048}
   vertical: 1
-  controlID: 82
+  controlID: 33
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 224}
   m_MaxSize: {x: 8006, y: 4024}
   vertical: 0
-  controlID: 63
+  controlID: 14
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -309,10 +309,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -378
-    m_HBaseRangeMax: 378
-    m_VBaseRangeMin: -164
-    m_VBaseRangeMax: 164
+    m_HBaseRangeMin: -472.5
+    m_HBaseRangeMax: 472.5
+    m_VBaseRangeMin: -205
+    m_VBaseRangeMax: 205
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
-  m_LastWindowPixelSize: {x: 1181.25, y: 533.75}
+  m_LastWindowPixelSize: {x: 945, y: 427}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -382,9 +382,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: f4f7ffff
       m_LastClickedID: 0
-      m_ExpandedIDs: 70f0ffff
+      m_ExpandedIDs: defbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -439,9 +439,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.57750034, y: 2.0238986, z: -1.4735041}
+    m_Target: {x: 0.92433214, y: 1.0781832, z: -1.2037859}
     speed: 2
-    m_Value: {x: 0.57750034, y: 2.0238986, z: -1.4735041}
+    m_Value: {x: 0.92433214, y: 1.0781832, z: -1.2037859}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -469,13 +469,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.037957113, y: 0.9429179, z: -0.115427874, w: -0.3100671}
+    m_Target: {x: -0.043007664, y: 0.94987386, z: -0.15115601, w: -0.27026242}
     speed: 2
-    m_Value: {x: -0.037957113, y: 0.9429179, z: -0.115427874, w: -0.3100671}
+    m_Value: {x: -0.043007668, y: 0.9498739, z: -0.15115602, w: -0.27026245}
   m_Size:
-    m_Target: 10
+    m_Target: 8.299428
     speed: 2
-    m_Value: 10
+    m_Value: 8.299428
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -549,7 +549,7 @@ MonoBehaviour:
     m_ReferencingInstanceIDs: 
     m_SceneHandles: 
     m_ShowAllHits: 0
-    m_SearchArea: 1
+    m_SearchArea: 4
     m_Folders:
     - Assets
   m_ViewMode: 1
@@ -557,14 +557,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: "D:\\4 course\\\u0414\u0438\u043F\u043B\u043E\u043C\\UnityProgram\\Quickdesert"
+  m_LastProjectPath: D:\4 course\Diploma\UnityProgram\Quickdesert
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 822e0000
-    m_LastClickedID: 11906
-    m_ExpandedIDs: 00000000822e000000ca9a3b
+    m_SelectedIDs: 7a090000
+    m_LastClickedID: 2426
+    m_ExpandedIDs: 000000007a0900006e0a000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -592,7 +592,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 
+    m_ExpandedIDs: 000000007a090000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

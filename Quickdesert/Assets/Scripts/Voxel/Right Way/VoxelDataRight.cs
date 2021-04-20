@@ -5,7 +5,7 @@ using UnityEngine;
 public class VoxelDataRight 
 {
     
-    int[,,] data = new int[1,2,3];   
+    public int[,,] data = new int[1,2,3];   
     
     public int X
     {

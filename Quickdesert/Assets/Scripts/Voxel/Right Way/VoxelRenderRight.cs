@@ -15,6 +15,8 @@ public class VoxelRenderRight : MonoBehaviour
     public int mapHeight;
     public float mapScale;
 
+    VoxelDataRight voxelData;
+    Collider coll;
 
     private void Awake()
     {
@@ -31,11 +33,46 @@ public class VoxelRenderRight : MonoBehaviour
 
         int[,,] data = new int[mapWidth, mapHeight, (int)(max*10)+1];
         data = BuildMesh(ref data, heightMap);
-        VoxelDataRight voxelData = new VoxelDataRight(data);
+        voxelData = new VoxelDataRight(data);
         //GenerateWithPrimitives(voxelData);
         GenerateVoxelMesh(voxelData);
         UpdateMesh();
+        coll = GetComponent<Collider>();
     }
+    private void Update()
+    {
+        ClickOnMesh();        
+    }
+    private void ClickOnMesh()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);            
+            RaycastHit hit;
+            if (coll.Raycast(ray, out hit, 100))
+            {
+                Debug.Log(hit.point);
+                Vector3 clickedBlockCoordinates = GetClickedBlockCoordinates(hit.point);
+                DeleteVoxel(clickedBlockCoordinates);
+                GenerateVoxelMesh(voxelData);
+                UpdateMesh();
+            }
+        }
+    }
+    private Vector3 GetClickedBlockCoordinates(Vector3 hitPoint)
+    {
+        int x = (int)hitPoint.x;
+        int y = (int)hitPoint.y;
+        int z = -(int)hitPoint.z;
+        Vector3 block = new Vector3(x, z, y);
+        return block;
+    }
+    private void DeleteVoxel(Vector3 block)
+    {
+        if (voxelData.GetCell((int)block.x, (int)block.y, (int)block.z) != 0)
+            voxelData.data[(int)block.x, (int)block.y, (int)block.z] = 0;
+    }
+
     private int[,,] BuildMesh(ref int[,,] data, float[,] heightMap)
     {
         for (int x = 0; x < data.GetLength(0); x++)

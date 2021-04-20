@@ -61,16 +61,49 @@ public class VoxelRenderRight : MonoBehaviour
     }
     private Vector3 GetClickedBlockCoordinates(Vector3 hitPoint)
     {
-        int x = (int)hitPoint.x;
-        int y = (int)hitPoint.y;
-        int z = -(int)hitPoint.z;
+        int x = (int)(hitPoint.x - (hitPoint.x % 1)); 
+        int y = (int)(hitPoint.y - (hitPoint.y % 1));
+        int z = (int)(hitPoint.z - (hitPoint.z % 1));
+        
+        //correct x
+        if (Camera.main.transform.position.x < x)
+        {
+            if (Mathf.Floor((hitPoint.x % 1) * 10) >= 5 && x < voxelData.data.GetLength(0) - 1)
+                x++;
+        }
+        else
+            if (Mathf.Floor((hitPoint.x % 1) * 10) > 5 && x < voxelData.data.GetLength(0) - 1)
+                x++;
+
+        //correct y
+        if (Camera.main.transform.position.y < y)
+        {
+            if (Mathf.Floor((hitPoint.y % 1) * 10) >= 5 && y < voxelData.data.GetLength(2) - 1)
+                y++;
+        }
+        else
+             if (Mathf.Floor((hitPoint.y % 1) * 10) > 5 && y < voxelData.data.GetLength(2) - 1)
+                y++;
+
+        //correct z
+        if (Camera.main.transform.position.z < z)
+        {
+            if (Mathf.Floor((-hitPoint.z % 1) * 10) > 5 && -z < voxelData.data.GetLength(1) - 1)
+                z--;
+        }
+        else
+            if (Mathf.Floor((-hitPoint.z % 1) * 10) >= 5 && -z < voxelData.data.GetLength(1) - 1)
+                z--;
+
+        Debug.Log(x.ToString() + " " + y.ToString() + " "  + z.ToString());
+
         Vector3 block = new Vector3(x, z, y);
         return block;
     }
     private void DeleteVoxel(Vector3 block)
     {
-        if (voxelData.GetCell((int)block.x, (int)block.y, (int)block.z) != 0)
-            voxelData.data[(int)block.x, (int)block.y, (int)block.z] = 0;
+        if (voxelData.GetCell((int)block.x, -(int)block.y, (int)block.z) != 0)
+            voxelData.data[(int)block.x, -(int)block.y, (int)block.z] = 0;
     }
 
     private int[,,] BuildMesh(ref int[,,] data, float[,] heightMap)

@@ -5,8 +5,10 @@ using UnityEngine;
 public class VoxelDataRight 
 {
     
-    public int[,,] data = new int[1,2,3];   
-    
+    public int[,,] data = new int[1,2,3];
+    public List<Vector3> vertices;
+    public List<int> triangles;
+
     public int X
     {
         get { return data.GetLength(0); }
@@ -40,6 +42,44 @@ public class VoxelDataRight
         else        
             return GetCell(neighborCoord.x, neighborCoord.y, neighborCoord.z);
         
+    }
+    public void GenerateVoxelMesh(float scale, float adjScale)
+    {
+        vertices = new List<Vector3>();
+        triangles = new List<int>();
+        for (int x = 0; x < X; x++)
+        {
+            for (int y = 0; y <Y; y++)
+            {
+                for (int z = 0; z < Z; z++)
+                {
+                    if (GetCell(x, y, z) == 0)
+                        continue;
+                    MakeCube(adjScale, new Vector3(x * scale, y * scale, z * scale), x, y, z);
+                }
+            }
+        }
+    }
+
+    private void MakeCube(float cubeScale, Vector3 cubePos, int x, int y, int z)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (GetNeighbor(x, y, z, (Direction)i) == 0)
+                MakeFace((Direction)i, cubeScale, cubePos);
+        }
+    }
+    private void MakeFace(Direction dir, float faceScale, Vector3 facePos)
+    {
+        vertices.AddRange(CubeMeshDataRight.faceVertices(dir, faceScale, facePos));
+        int vCount = vertices.Count;
+
+        triangles.Add(vCount - 4);
+        triangles.Add(vCount - 4 + 1);
+        triangles.Add(vCount - 4 + 2);
+        triangles.Add(vCount - 4);
+        triangles.Add(vCount - 4 + 2);
+        triangles.Add(vCount - 4 + 3);
     }
     struct DataCoordinate
     {

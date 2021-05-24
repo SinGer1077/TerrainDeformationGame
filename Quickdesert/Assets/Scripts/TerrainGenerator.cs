@@ -23,23 +23,42 @@ public class TerrainGenerator : MonoBehaviour
     //    //terrainData.SetHeights(0, 0, GenerateHeights(width, height, scale));
     //    //return terrainData;
     //}
+    /// <summary>
+    /// генерация карты высот
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <param name="scale"></param>
+    /// <returns></returns>
    float [,] GenerateHeights(int width, int height, float scale)
     {
-        float[,] heights = new float[width, height];
+        float[,] heights = new float[width, height];        
         for (int x = 0; x<width; x++)
         {
             for (int y = 0; y<height; y++)
             {
+                //для каждой ячейки вычисляем высоту
                 float value = CalculateHeight(x, y, scale, width, height);
                 heights[x, y] = value;
             }
         }
         return heights;
     }
+    /// <summary>
+    /// вычисление высоты
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="scale"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
     float CalculateHeight(float x, float y, float scale, int width, int height)
     {
+        //получаем координаты для плавного перехода
         float xCoord = x / width * scale;
         float yCoord = y / height * scale;
+        //возвращаем полученное значение от 0.0 до 1.0
         return Mathf.PerlinNoise(xCoord, yCoord);
     }
     public void GetMaxHeight(int width, int height, float scale, ref float[,] heights,  ref float max)

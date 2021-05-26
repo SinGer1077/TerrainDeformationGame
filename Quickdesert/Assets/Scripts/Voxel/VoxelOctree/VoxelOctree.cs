@@ -153,10 +153,12 @@ public class VoxelOctree : MonoBehaviour
         node.triangles.Add(vCount - 4 + 2);
         node.triangles.Add(vCount - 4 + 3);
     }
-    private void UpdateMesh(Octree<int>.OctreeNode<int> node)
+    public void UpdateMesh(Octree<int>.OctreeNode<int> node)
     {
         GameObject cube = new GameObject();
-        cube.isStatic = true;
+        //cube.isStatic = true;
+        cube.tag = "Terrain";
+        cube.layer = LayerMask.NameToLayer("whatIsTerrain");
         cube.transform.SetParent(GameObject.Find("Octree").transform);
         MeshFilter filter = cube.AddComponent<MeshFilter>();        
 
@@ -175,6 +177,9 @@ public class VoxelOctree : MonoBehaviour
 
         cube.AddComponent<MeshCollider>();
         cube.GetComponent<MeshCollider>().sharedMesh = node.mesh;
+
+        cube.AddComponent<ShootingTerrain>();
+        cube.GetComponent<ShootingTerrain>().node = node;
         //MeshCollider meshCol = GetComponent<MeshCollider>();
         //meshCol.sharedMesh = mesh;
     }

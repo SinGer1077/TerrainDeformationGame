@@ -41,7 +41,7 @@ public class VoxelRenderRight : MonoBehaviour
     }
     private void Update()
     {       
-        //meshCol.sharedMesh = voxelDataStorage.mesh;
+        meshCol.sharedMesh = voxelDataStorage.mesh;
     }    
     /// <summary>
     /// заполняем воксельную 3д сетку

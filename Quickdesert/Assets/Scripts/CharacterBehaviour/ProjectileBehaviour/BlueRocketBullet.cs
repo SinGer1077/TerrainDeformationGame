@@ -7,6 +7,7 @@ public class BlueRocketBullet : MonoBehaviour
     public Rigidbody rb;
     public GameObject explosion;
     public LayerMask whatIsEnemies;
+    public LayerMask whatIsTerrain;
 
     [Range(0f, 1f)]
     public float bounciness;
@@ -41,6 +42,12 @@ public class BlueRocketBullet : MonoBehaviour
     {
         if (explosion != null)
             Instantiate(explosion, transform.position, Quaternion.identity);
+
+        Collider[] blocks = Physics.OverlapSphere(transform.position, explosionRange, whatIsTerrain);
+        for (int i=0; i<blocks.Length; i++)
+        {            
+            blocks[i].GetComponent<ShootingTerrain>().TakeDamage(transform.position, explosionRange, whatIsTerrain, explosionDamage );
+        }
 
         // Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
         Invoke("Delay", 0.05f);

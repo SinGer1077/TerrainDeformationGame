@@ -6,6 +6,8 @@ public class CreateCube : MonoBehaviour
 {
     public Material material;
     public float scale = 1f;
+    //public bool isDeleted = false;
+   
     private void MakeCube(float cubeScale, Vector3 cubePos, Octree<int>.OctreeNode<int> node)
     {
         for (int i = 0; i < 6; i++)
@@ -28,7 +30,7 @@ public class CreateCube : MonoBehaviour
     public void UpdateMesh(Octree<int>.OctreeNode<int> node, Vector3 position)
     {
         MakeCube(node.Size / 2 * scale, position, node);
-
+        material = Resources.Load("Materials/Terrain", typeof(Material)) as Material;
         GameObject cube = new GameObject();        
         //cube.isStatic = true;
         cube.tag = "Terrain";
@@ -54,6 +56,7 @@ public class CreateCube : MonoBehaviour
 
         cube.AddComponent<ShootingTerrain>();
         cube.GetComponent<ShootingTerrain>().node = node;
+        cube.GetComponent<ShootingTerrain>().isDeleted = false;
         //MeshCollider meshCol = GetComponent<MeshCollider>();
         //meshCol.sharedMesh = mesh;
     }

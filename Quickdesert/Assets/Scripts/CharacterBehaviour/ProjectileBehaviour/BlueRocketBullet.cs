@@ -22,6 +22,7 @@ public class BlueRocketBullet : MonoBehaviour
 
     int collisions;
     PhysicMaterial physics_mat;
+    bool alreadyExpload = false;
 
     private void Start()
     {
@@ -30,8 +31,8 @@ public class BlueRocketBullet : MonoBehaviour
 
     private void Update()
     {
-        if (collisions > maxCollisions) 
-            Explode();
+        //if (collisions > maxCollisions) 
+        //    Explode();
 
         maxLifetime -= Time.deltaTime;
         if (maxLifetime <= 0)
@@ -40,17 +41,29 @@ public class BlueRocketBullet : MonoBehaviour
 
     private void Explode()
     {
-        if (explosion != null)
-            Instantiate(explosion, transform.position, Quaternion.identity);
+        if (alreadyExpload == false)
+        {
+            if (explosion != null)
+            {
+                Instantiate(explosion, transform.position, Quaternion.identity);
+                alreadyExpload = true;
+            }
 
-        Collider[] blocks = Physics.OverlapSphere(transform.position, explosionRange, whatIsTerrain);
-        for (int i=0; i<blocks.Length; i++)
-        {            
-            blocks[i].GetComponent<ShootingTerrain>().TakeDamage(transform.position, explosionRange, whatIsTerrain, explosionDamage );
+            Collider[] blocks = Physics.OverlapSphere(transform.position, explosionRange, whatIsTerrain);
+            Debug.Log("При первом выстреле получили блоков " + blocks.Length);
+            if (blocks.Length < 50)
+            {
+                List<Collider> listBlocks = new List<Collider>(blocks.Length);
+                listBlocks.AddRange(blocks);
+                for (int i = 0; i < blocks.Length; i++)
+                {
+
+                    blocks[i].GetComponent<ShootingTerrain>().TakeDamage(transform.position, explosionRange, whatIsTerrain, explosionDamage);//, listBlock
+                }
+            }
+            // Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
+            Invoke("Delay", 0.05f);
         }
-
-        // Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
-        Invoke("Delay", 0.05f);
     }
 
     private void Delay()

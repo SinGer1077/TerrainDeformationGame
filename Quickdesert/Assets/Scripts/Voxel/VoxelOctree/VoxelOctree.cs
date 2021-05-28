@@ -114,8 +114,9 @@ public class VoxelOctree : MonoBehaviour
 
                 if (node.IsLeaf())
                 {
-                    MakeCube(node.Size / 2, new Vector3(node.Position.x, node.Position.z, node.Position.y), node);
-                    UpdateMesh(node);
+                    gameObject.AddComponent<CreateCube>().UpdateMesh(node, new Vector3(node.Position.x, node.Position.z, node.Position.y));
+                    //MakeCube(node.Size / 2, new Vector3(node.Position.x, node.Position.z, node.Position.y), node);
+                    //UpdateMesh(node);
                 }
             }           
         }
@@ -123,8 +124,9 @@ public class VoxelOctree : MonoBehaviour
         {
             if (node.IsLeaf())
             {
-                MakeCube(node.Size / 2 * scale, node.Position, node);
-                UpdateMesh(node);
+                gameObject.AddComponent<CreateCube>().UpdateMesh(node, new Vector3(node.Position.x, node.Position.z, node.Position.y));
+                //MakeCube(node.Size / 2 * scale, node.Position, node);
+                //UpdateMesh(node);
             }
         }
         //else

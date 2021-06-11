@@ -23,7 +23,7 @@ public class ShootingTerrain : MonoBehaviour
             this.isDeleted = true;
             Destroy(this.gameObject);
             Collider[] blocks = Physics.OverlapSphere(position, explosionRange, whatIsTerrain);
-            Debug.Log("После деления куба размером "+ node.Size + " попали по блокам " + blocks.Length);
+            //Debug.Log("После деления куба размером "+ node.Size + " попали по блокам " + blocks.Length);
             //if (blocks.Length < 50)
             //{
             //    List<Collider> listBlocks = new List<Collider>();

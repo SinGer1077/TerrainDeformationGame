@@ -50,7 +50,7 @@ public class BlueRocketBullet : MonoBehaviour
             }
 
             Collider[] blocks = Physics.OverlapSphere(transform.position, explosionRange, whatIsTerrain);
-            Debug.Log("При первом выстреле получили блоков " + blocks.Length);
+            //Debug.Log("При первом выстреле получили блоков " + blocks.Length);
             if (blocks.Length < 50)
             {
                 List<Collider> listBlocks = new List<Collider>(blocks.Length);

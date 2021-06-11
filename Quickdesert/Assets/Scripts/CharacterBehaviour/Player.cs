@@ -13,8 +13,7 @@ using System.Threading.Tasks;
 
         public Player()
         {            
-            HP = 100;
-            
+            HP = 100;            
         }
     }
 

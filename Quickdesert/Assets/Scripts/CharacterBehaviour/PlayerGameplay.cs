@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerGameplay : MonoBehaviour
 {
@@ -14,12 +15,16 @@ public class PlayerGameplay : MonoBehaviour
     public GameObject projectile;
     public GameObject gun;
     public GameObject WeaponModel;
+
+    public GameObject pauseMenu;
+    public Camera fpsCamera;
+
     // Start is called before the first frame update
     void Start()
     {
-        terrainCollider = GameObject.Find("VoxelTerrain").GetComponent<Collider>();
-        terrainMesh = GameObject.Find("VoxelTerrain").GetComponent<MeshCollider>();
-        terrainMesh.sharedMesh = voxelDataStorage.mesh;
+        //terrainCollider = GameObject.Find("VoxelTerrain").GetComponent<Collider>();
+       // terrainMesh = GameObject.Find("VoxelTerrain").GetComponent<MeshCollider>();
+       // terrainMesh.sharedMesh = voxelDataStorage.mesh;
 
         player = new Player();
         LazerRed weapon = new LazerRed(voxelDataStorage, terrainCollider);        
@@ -27,14 +32,15 @@ public class PlayerGameplay : MonoBehaviour
         WeaponModel.GetComponent<Renderer>().material = Resources.Load("Materials/LazerRed", typeof(Material)) as Material;
 
         player.CurrentWeapon = weapon;
-        Debug.Log(player.CurrentWeapon);
+        ResumeGame();
+        //Debug.Log(player.CurrentWeapon);        
     }
 
     // Update is called once per frame
     void Update()
     {
-        terrainMesh = GameObject.Find("VoxelTerrain").GetComponent<MeshCollider>();
-        terrainMesh.sharedMesh = voxelDataStorage.mesh;
+       // terrainMesh = GameObject.Find("VoxelTerrain").GetComponent<MeshCollider>();
+       // terrainMesh.sharedMesh = voxelDataStorage.mesh;
 
         //if (player.CurrentWeapon.Type == GunType.Hitman)
         //{
@@ -61,7 +67,38 @@ public class PlayerGameplay : MonoBehaviour
             WeaponModel.GetComponent<Renderer>().material = Resources.Load("Materials/RocketBlue", typeof(Material)) as Material;
             Debug.Log("Rocket blue");
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseMenu.activeSelf == false)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
     }
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        GetComponent<LazerRedBehaviour>().enabled = false;
+        GetComponent<BlueRocketBehaviour>().enabled = false;
+        GetComponent<FirstPersonController>().enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        GetComponent<LazerRedBehaviour>().enabled = true;
+        GetComponent<BlueRocketBehaviour>().enabled = true;
+        GetComponent<FirstPersonController>().enabled = true;
+        Cursor.visible = false;
+    }
+
     private Vector3 GetClickedBlockCoordinates(Vector3 hitPoint)
     {
         int x = (int)(hitPoint.x - (hitPoint.x % 1));

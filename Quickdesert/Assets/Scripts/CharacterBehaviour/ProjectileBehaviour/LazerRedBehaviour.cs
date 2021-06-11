@@ -11,6 +11,12 @@ public class LazerRedBehaviour : MonoBehaviour
     public int magazineSize, bulletPerTap;
     public bool allowButtonHold;
 
+    public int explosionDamage;
+    public float explosionRange;
+
+    public LayerMask whatIsEnemies;
+    public LayerMask whatIsTerrain;
+
     int bulletsLeft, bulletsShot;
 
     //bools
@@ -83,16 +89,39 @@ public class LazerRedBehaviour : MonoBehaviour
     private void Shot()
     {
         readyToShoot = false;
-
-        Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100))
+        if (fpsCam != null)
         {
-            if (hit.transform.gameObject.tag != "Player")
+            Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
             {
-               
+                if (hit.transform.gameObject.tag != "Wall")
+                {
+                    if (hit.transform.gameObject.tag != "Player")
+                    {
+
+                    }
+                    Explode(hit.point);
+                }
             }
-            Explode(hit.point);
+        }
+        else
+        {
+            Vector3 fromPosition = attackPoint.transform.position;
+            Vector3 toPosition = new Vector3(19, 9, 19);
+            Vector3 direction = toPosition - fromPosition;
+            RaycastHit hit;
+            if (Physics.Raycast(fromPosition, direction, out hit, 100))
+            {
+                if (hit.transform.gameObject.tag != "Wall")
+                {
+                    if (hit.transform.gameObject.tag != "Player")
+                    {
+
+                    }
+                    Explode(hit.point);
+                }
+            }
         }
         
 
@@ -116,11 +145,29 @@ public class LazerRedBehaviour : MonoBehaviour
     }
     private void Explode(Vector3 hitpoint)
     {
-        if (explosion != null)
-            Instantiate(explosion, hitpoint, Quaternion.identity);
+        //if (explosion != null)
+        //    Instantiate(explosion, hitpoint, Quaternion.identity);
 
         // Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
-        
+
+        if (explosion != null)
+        {
+            Instantiate(explosion, hitpoint, Quaternion.identity);            
+        }
+        Collider[] blocks = Physics.OverlapSphere(hitpoint, explosionRange, whatIsTerrain);
+        Debug.Log("При первом выстреле получили блоков " + blocks.Length);
+        if (blocks.Length < 50)
+        {
+            List<Collider> listBlocks = new List<Collider>(blocks.Length);
+            listBlocks.AddRange(blocks);
+            for (int i = 0; i < blocks.Length; i++)
+            {
+
+                blocks[i].GetComponent<ShootingTerrain>().TakeDamage(hitpoint, explosionRange, whatIsTerrain, explosionDamage);//, listBlock
+            }
+        }
+        // Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);        
+
     }    
 
     private void ResetShot()

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    public GameObject controlMenu;
+    public GameObject pauseMenu;
     public void QuitToMenu()
     {        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
@@ -13,5 +15,21 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Quit!");
         Application.Quit();
+    }
+    public void ControlShow()
+    {
+        if (controlMenu.activeSelf == false)
+        {
+            pauseMenu.SetActive(false);
+            controlMenu.SetActive(true);
+        }
+    }
+    public void ControlBack()
+    {
+        if (controlMenu.activeSelf == true)
+        {
+            controlMenu.SetActive(false);
+            pauseMenu.SetActive(true);
+        }
     }
 }

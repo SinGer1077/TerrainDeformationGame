@@ -17,6 +17,7 @@ public class PlayerGameplay : MonoBehaviour
     public GameObject WeaponModel;
 
     public GameObject pauseMenu;
+    public GameObject controlMenu;
     public Camera fpsCamera;
 
     // Start is called before the first frame update
@@ -76,6 +77,10 @@ public class PlayerGameplay : MonoBehaviour
             else
             {
                 ResumeGame();
+            }
+            if (controlMenu.activeSelf == true)
+            {
+                controlMenu.SetActive(false);
             }
         }
     }

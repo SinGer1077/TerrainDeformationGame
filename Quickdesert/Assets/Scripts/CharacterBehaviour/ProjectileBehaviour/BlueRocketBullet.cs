@@ -61,6 +61,15 @@ public class BlueRocketBullet : MonoBehaviour
                     blocks[i].GetComponent<ShootingTerrain>().TakeDamage(transform.position, explosionRange, whatIsTerrain, explosionDamage);//, listBlock
                 }
             }
+            Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                if (enemies[i].tag == "BotComponent")
+                {
+                    enemies[i].gameObject.GetComponentInParent<BotGameplay>().TakeDamage(explosionDamage);
+                }
+                //enemies[i].gameObject.GetComponent<BotGameplay>().TakeDamage(explosionDamage);
+            }
             // Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
             Invoke("Delay", 0.05f);
         }
@@ -74,7 +83,7 @@ public class BlueRocketBullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         collisions++;
-        if (collision.collider.CompareTag("Terrain") && explodeOnTouch)
+        if ( (collision.collider.CompareTag("Terrain") || collision.collider.CompareTag("BotComponent")) && explodeOnTouch)
             Explode();
     }
 

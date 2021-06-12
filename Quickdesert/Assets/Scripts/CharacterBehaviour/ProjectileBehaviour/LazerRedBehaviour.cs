@@ -166,7 +166,15 @@ public class LazerRedBehaviour : MonoBehaviour
                 blocks[i].GetComponent<ShootingTerrain>().TakeDamage(hitpoint, explosionRange, whatIsTerrain, explosionDamage);//, listBlock
             }
         }
-        // Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);        
+        Collider[] enemies = Physics.OverlapSphere(hitpoint, explosionRange, whatIsEnemies); 
+        for (int i=0; i<enemies.Length; i++)
+        {
+            if (enemies[i].tag == "BotComponent")
+            {
+                enemies[i].gameObject.GetComponentInParent<BotGameplay>().TakeDamage(explosionDamage);
+            }
+            //enemies[i].gameObject.GetComponent<BotGameplay>().TakeDamage(explosionDamage);
+        }
 
     }    
 

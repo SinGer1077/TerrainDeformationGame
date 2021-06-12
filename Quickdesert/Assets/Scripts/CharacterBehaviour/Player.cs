@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-    public class Player
-    {        
-        public int HP { get; set; }        
-        public IPRojectile CurrentWeapon { get; set; }      
+public class Player
+{
+    public int HP { get; set; }
+    public IPRojectile CurrentWeapon { get; set; }
 
 
-        public Player()
-        {            
-            HP = 100;            
-        }
-    }
+    public Player()
+    {
+        HP = 100;
+    }    
+}
 

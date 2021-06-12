@@ -87,4 +87,12 @@ public class BotGameplay : MonoBehaviour
     {
         readyToChange = true;
     }
+    public void TakeDamage(int damage)
+    {
+        player.HP -= damage;
+        if (player.HP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

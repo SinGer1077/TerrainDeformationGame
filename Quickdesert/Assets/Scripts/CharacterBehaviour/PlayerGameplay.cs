@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerGameplay : MonoBehaviour
 {
@@ -15,10 +17,18 @@ public class PlayerGameplay : MonoBehaviour
     public GameObject projectile;
     public GameObject gun;
     public GameObject WeaponModel;
+    public GameObject playerBody;
+    public Material standartMaterial;
 
     public GameObject pauseMenu;
     public GameObject controlMenu;
+    public GameObject finishMenu;
+    public Text finishMessage;
     public Camera fpsCamera;
+
+    public TextMeshProUGUI hpDisplay;
+
+    GameObject[] bots;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +44,20 @@ public class PlayerGameplay : MonoBehaviour
 
         player.CurrentWeapon = weapon;
         ResumeGame();
+        if (hpDisplay != null)
+            hpDisplay.SetText("HP: " + player.HP + "/" + "100");
+
+        bots = GameObject.FindGameObjectsWithTag("Bot");
+        foreach (GameObject bot in bots)
+            bot.SetActive(false);
         //Debug.Log(player.CurrentWeapon);        
     }
 
     // Update is called once per frame
     void Update()
     {
-       // terrainMesh = GameObject.Find("VoxelTerrain").GetComponent<MeshCollider>();
-       // terrainMesh.sharedMesh = voxelDataStorage.mesh;
+        // terrainMesh = GameObject.Find("VoxelTerrain").GetComponent<MeshCollider>();
+        // terrainMesh.sharedMesh = voxelDataStorage.mesh;
 
         //if (player.CurrentWeapon.Type == GunType.Hitman)
         //{
@@ -54,7 +70,7 @@ public class PlayerGameplay : MonoBehaviour
         //        Instantiate(projectile, gun.transform.position,
         //            Quaternion.identity);
         //    }
-        //}
+        //}      
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -82,6 +98,31 @@ public class PlayerGameplay : MonoBehaviour
             {
                 controlMenu.SetActive(false);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {            
+            if (bots[0].activeSelf == true) 
+            {
+                foreach (GameObject bot in bots)
+                    bot.SetActive(false);
+            }
+            else
+            {
+                foreach (GameObject bot in bots)
+                    bot.SetActive(true);
+            }
+        }
+        int flag = 0;
+        foreach (GameObject bot in bots)
+        {
+            if (bot == null)
+                flag += 1;
+        }
+        if (flag == 5)
+        {
+            PauseGame();
+            finishMenu.SetActive(true);
+            finishMessage.text = "You won!!!";
         }
     }
     public void PauseGame()
@@ -146,5 +187,23 @@ public class PlayerGameplay : MonoBehaviour
     {
         if (voxelDataStorage.voxelData.GetCell((int)block.x, -(int)block.y, (int)block.z) != 0)
             voxelDataStorage.voxelData.data[(int)block.x, -(int)block.y, (int)block.z] = 0;
+    }
+    public void TakeDamage(int damage)
+    {
+        player.HP -= damage;
+        playerBody.GetComponent<Renderer>().material = Resources.Load("Materials/Hitted", typeof(Material)) as Material;
+        if (hpDisplay != null)
+            hpDisplay.SetText("HP: " + player.HP + "/" + "100");
+        if (player.HP <= 0)
+        {
+            PauseGame();
+            finishMenu.SetActive(true);
+            finishMessage.text = "You died(";
+        }
+        Invoke("InvokeHit", 0.5f);
+    }
+    public void InvokeHit()
+    {
+        playerBody.GetComponent<Renderer>().material = standartMaterial;
     }
 }

@@ -32,4 +32,8 @@ public class PauseMenu : MonoBehaviour
             pauseMenu.SetActive(true);
         }
     }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

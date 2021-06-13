@@ -11,7 +11,8 @@ public class BotGameplay : MonoBehaviour
     public GameObject projectile;
     public GameObject gun;
     public GameObject WeaponModel;
-
+    public GameObject playerBody;
+    public Material standartMaterial;
 
     //bots parameters
     //jump
@@ -89,10 +90,20 @@ public class BotGameplay : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        player.HP -= damage;
+        player.HP -= damage;        
         if (player.HP <= 0)
         {
             Destroy(this.gameObject);
         }
+        else
+        {
+            playerBody.GetComponent<Renderer>().material = Resources.Load("Materials/Hitted", typeof(Material)) as Material;
+            Invoke("InvokeHit", 0.5f);
+        }
+
+    }
+    public void InvokeHit()
+    {
+        playerBody.GetComponent<Renderer>().material = standartMaterial;
     }
 }

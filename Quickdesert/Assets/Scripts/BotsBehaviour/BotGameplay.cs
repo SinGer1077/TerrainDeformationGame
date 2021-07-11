@@ -106,4 +106,12 @@ public class BotGameplay : MonoBehaviour
     {
         playerBody.GetComponent<Renderer>().material = standartMaterial;
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "WallDown")
+        {
+            this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x + 10, this.gameObject.transform.position.y + 10,
+                this.gameObject.transform.position.z);
+        }
+    }
 }

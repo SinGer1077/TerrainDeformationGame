@@ -206,4 +206,13 @@ public class PlayerGameplay : MonoBehaviour
     {
         playerBody.GetComponent<Renderer>().material = standartMaterial;
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        //if (collision.gameObject.name == "WallDown")
+        //{
+        //    PauseGame();
+        //    finishMenu.SetActive(true);
+        //    finishMessage.text = "You died(";
+        //}
+    }
 }

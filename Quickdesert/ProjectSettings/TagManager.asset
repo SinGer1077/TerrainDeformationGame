@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Terrain
+  - Bullet
+  - Wall
+  - BotComponent
+  - Bot
   layers:
   - Default
   - TransparentFX
@@ -14,11 +19,11 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
+  - whatIsTerrain
+  - wall
+  - bullet
+  - whatIsPlayer
+  - whatIsEnemies
   - 
   - 
   - 
